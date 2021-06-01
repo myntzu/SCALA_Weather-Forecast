@@ -1,0 +1,36 @@
+import java.time.format.DateTimeFormatter 
+import java.time.LocalDateTime 
+import java.time.LocalDate 
+
+case class Data(dateTime: LocalDateTime, currency: Double) 
+
+object MyProgram1 extends App { 
+    val pattern = "yyyyMMdd'T'HHmm" 
+    val dateFormater = DateTimeFormatter.ofPattern(pattern) 
+    val myData = Array(new Data(LocalDateTime.parse("20200101T0000",dateFormater), 4.0), 
+        new Data(LocalDateTime.parse("20200101T0100", dateFormater), 4.1),
+        new Data(LocalDateTime.parse("20200101T1000",dateFormater), 4.1), 
+        new Data(LocalDateTime.parse("20200101T1200",dateFormater), 5.1), 
+        new Data(LocalDateTime.parse("20200101T2000", dateFormater), 4.0), 
+        new Data(LocalDateTime.parse("20200101T2000", dateFormater), 4.3), 
+        new Data(LocalDateTime.parse("20200201T2000",dateFormater), 4.0), 
+        new Data(LocalDateTime.parse("20200201T2030", dateFormater), 4.5), 
+        new Data(LocalDateTime.parse("20200201T2040",dateFormater), 4.1), 
+        new Data(LocalDateTime.parse("20200201T2050",dateFormater), 4.1) 
+
+    ) 
+
+   val a = myData.filter(y => 
+   y.dateTime.isBefore(LocalDateTime.parse("20200102T0000", dateFormater)) 
+   && y.dateTime.isAfter(LocalDateTime.parse("20200101T0000", dateFormater).minusDays(1))) 
+   
+   println(s"The average currecy on ${LocalDateTime.parse("20200101T0000", dateFormater).toLocalDate()} ${myData.map(_.currency).sum / myData.size}") 
+
+
+Val b = a.map(_.dateTime).map(_.toLocalDate).toSet 
+
+Val result2 = b.map(x =>  
+  val result = a.filter(y => y.dataTime.toLocalDate.equals(x)) 
+  b -> result.map(_.currency).sum / result.size 
+
+} 
